@@ -64,3 +64,4 @@ class TruckLog(Base):
     latitude = Column(Numeric(30, 21))
     longitude = Column(Numeric(30, 21))
     geom = Column(Geometry('POINT'))
+    log_time = Column(DateTime, nullable=True, index=True)
