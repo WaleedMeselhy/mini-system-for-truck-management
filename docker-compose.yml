@@ -1,0 +1,25 @@
+version: '3.3'
+
+services:
+
+   database:
+     image: mdillon/postgis:9.5-alpine
+     restart: always
+     env_file: dev.env
+     ports:
+       - 0:5432:5432
+     volumes:
+       - ./db_data/:/var/lib/postgresql/data/
+
+   migration:
+     image: migrations
+     env_file: dev.env
+     build:
+        context: .
+        dockerfile: migrations/Dockerfile
+     links:
+       - database
+     depends_on:
+       - database
+     command: alembic upgrade head
+    #  command: tail -f /dev/null
