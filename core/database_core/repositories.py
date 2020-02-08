@@ -97,3 +97,14 @@ class TruckLogRepository(DefaultRepository):
         kwargs['geom'] = func.ST_Point(kwargs['longitude'], kwargs['latitude'])
         obj = super().create(gateway, **kwargs)
         return obj
+
+    def get_truck_log_in_range(self, gateway, truck_id, start_time, end_time):
+        model = self.model.alchemy_model
+        with gateway.session_scope() as session:
+            objs = session.query(model).filter(
+                model.truck_id == truck_id,
+                and_(model.log_time >= start_time,
+                     model.log_time < end_time)).order_by(
+                         model.log_time.asc())
+            objs = list(map(lambda obj: self.model.from_alchemy(obj), objs))
+            return objs
