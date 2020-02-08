@@ -1,38 +1,52 @@
-version: '3.3'
+version: "3.3"
 
 services:
+  database:
+    image: mdillon/postgis:9.5-alpine
+    restart: always
+    env_file: dev.env
+    ports:
+      - 0:5432:5432
+    volumes:
+      - ./db_data/:/var/lib/postgresql/data/
 
-   database:
-     image: mdillon/postgis:9.5-alpine
-     restart: always
-     env_file: dev.env
-     ports:
-       - 0:5432:5432
-     volumes:
-       - ./db_data/:/var/lib/postgresql/data/
-
-   migration:
-     image: migrations
-     env_file: dev.env
-     build:
-        context: .
-        dockerfile: migrations/Dockerfile
-     links:
-       - database
-     depends_on:
-       - database
-     command: alembic upgrade head
+  migration:
+    image: migrations
+    env_file: dev.env
+    build:
+      context: .
+      dockerfile: migrations/Dockerfile
+    links:
+      - database
+    depends_on:
+      - database
+    command: alembic upgrade head
     #  command: tail -f /dev/null
 
-   truck_api:
-     image: truck_api
-     env_file: dev.env
-     build:
-       context: .
-       dockerfile: services/truck_api/Dockerfile
-     links:
-       - database
-     depends_on:
-       - database
-     ports:
-       - 0:5000:5000
+  truck_api:
+    image: truck_api
+    env_file: dev.env
+    build:
+      context: .
+      dockerfile: services/truck_api/Dockerfile
+    links:
+      - database
+    depends_on:
+      - database
+    ports:
+      - 0:5000:5000
+
+  rabbitmq:
+    image: rabbitmq:3.7.8-management-alpine
+    ports:
+      - 15672:15672
+
+  celery_worker:
+    depends_on:
+      - rabbitmq
+      - truck_api
+    image: celery_worker
+    env_file: dev.env
+    build:
+      context: .
+      dockerfile: services/celery_worker/Dockerfile
