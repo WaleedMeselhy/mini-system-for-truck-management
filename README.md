@@ -21,11 +21,14 @@ requires [Docker Compose](https://docs.docker.com/compose/) to run.
 
 ### Run example.
 
+
 ``` sh
 git clone git@github.com:WaleedMeselhy/mini-system-for-truck-management.git
 cd mini-system-for-truck-management
 sudo ./run.sh # to run example
 # press D at any time to stop
+# every 30 seconds task will run to calculate all trucks activities
+# example truck_id: 3, total_distance: 2100.24977709602, total_active_time: 0.031821999999999996
 
 
 # in another terminal
@@ -155,7 +158,7 @@ curl -X POST \
 curl -X GET \
   http://localhost:5000/v1/trucks 
 
-end_timestamp=$(date +%s)
+end_timestamp=`expr $(date +%s) + 100`
 #get summary 
 curl "http://localhost:5000/v1/truck/1/summary?start_time=${start_timestamp}&end_time=${end_timestamp}"
 ```
