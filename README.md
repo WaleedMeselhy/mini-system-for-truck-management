@@ -157,6 +157,6 @@ curl -X GET \
 
 end_timestamp=$(date +%s)
 #get summary 
-curl -X GET \
-  'http://localhost:5000/v1/truck/1/summary?start_time=$start_timestamp&end_time=$end_timestamp' 
+curl "http://localhost:5000/v1/truck/1/summary?start_time=${start_timestamp}&end_time=${end_timestamp}"
 ```
+
