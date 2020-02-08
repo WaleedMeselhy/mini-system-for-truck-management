@@ -22,7 +22,7 @@ requires [Docker Compose](https://docs.docker.com/compose/) to run.
 ### Run example.
 
 ``` sh
-git clone git@github.com:WaleedMeselhy/subreddit_twitter_scrape.git
+git clone git@github.com:WaleedMeselhy/mini-system-for-truck-management.git
 cd mini-system-for-truck-management
 sudo ./run.sh # to run example
 # press D at any time to stop
