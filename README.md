@@ -29,6 +29,9 @@ sudo ./run.sh # to run example
 
 
 # in another terminal
+start_timestamp=$(date +%s)
+
+# add trucks
 curl -X POST \
   http://localhost:5000/v1/truck/ \
   -H 'cache-control: no-cache' \
@@ -37,5 +40,123 @@ curl -X POST \
   -d '{
 "plate_number":"test1"	
 }'
+curl -X POST \
+  http://localhost:5000/v1/truck/ \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'postman-token: b1193f4c-c0fc-2e85-aa26-3738ed4bed74' \
+  -d '{
+"plate_number":"test2"	
+}'
+curl -X POST \
+  http://localhost:5000/v1/truck/ \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'postman-token: c3e56a64-1067-949c-68ba-f62f8891fd38' \
+  -d '{
+"plate_number":"test3"	
+}'
 
+
+#add trucklogs for 1
+curl -X POST \
+  http://localhost:5000/v1/truck/1/log \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'postman-token: 9156d6b8-7c48-c280-d53d-0e82ca13115e' \
+  -d '{
+	
+	"latitude": 37.773972,
+	"longitude":  -122.43129
+}'
+curl -X POST \
+  http://localhost:5000/v1/truck/1/log \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'postman-token: 0619a062-2dac-f7a3-183d-33f6eb61de64' \
+  -d '{
+	
+	"latitude": 47.608013,
+	"longitude":  -122.335167
+}'
+curl -X POST \
+  http://localhost:5000/v1/truck/1/log \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'postman-token: b81cac86-3fe8-e381-1cb4-ad02b7006827' \
+  -d '{
+	
+	"latitude": 38.575764,
+	"longitude":  -121.478851
+}'
+#add trucklogs for 2
+curl -X POST \
+  http://localhost:5000/v1/truck/2/log \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'postman-token: 9156d6b8-7c48-c280-d53d-0e82ca13115e' \
+  -d '{
+	
+	"latitude": 37.773972,
+	"longitude":  -122.43129
+}'
+curl -X POST \
+  http://localhost:5000/v1/truck/2/log \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'postman-token: 0619a062-2dac-f7a3-183d-33f6eb61de64' \
+  -d '{
+	
+	"latitude": 47.608013,
+	"longitude":  -122.335167
+}'
+curl -X POST \
+  http://localhost:5000/v1/truck/2/log \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'postman-token: b81cac86-3fe8-e381-1cb4-ad02b7006827' \
+  -d '{
+	
+	"latitude": 38.575764,
+	"longitude":  -121.478851
+}'
+#add trucklogs for 3
+curl -X POST \
+  http://localhost:5000/v1/truck/3/log \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'postman-token: 9156d6b8-7c48-c280-d53d-0e82ca13115e' \
+  -d '{
+	
+	"latitude": 37.773972,
+	"longitude":  -122.43129
+}'
+curl -X POST \
+  http://localhost:5000/v1/truck/3/log \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'postman-token: 0619a062-2dac-f7a3-183d-33f6eb61de64' \
+  -d '{
+	
+	"latitude": 47.608013,
+	"longitude":  -122.335167
+}'
+curl -X POST \
+  http://localhost:5000/v1/truck/3/log \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'postman-token: b81cac86-3fe8-e381-1cb4-ad02b7006827' \
+  -d '{
+	
+	"latitude": 38.575764,
+	"longitude":  -121.478851
+}'
+#get active trucks
+curl -X GET \
+  http://localhost:5000/v1/trucks 
+
+end_timestamp=$(date +%s)
+#get summary 
+curl -X GET \
+  'http://localhost:5000/v1/truck/1/summary?start_time=$start_timestamp&end_time=$end_timestamp' 
 ```
