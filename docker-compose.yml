@@ -23,3 +23,16 @@ services:
        - database
      command: alembic upgrade head
     #  command: tail -f /dev/null
+
+   truck_api:
+     image: truck_api
+     env_file: dev.env
+     build:
+       context: .
+       dockerfile: services/truck_api/Dockerfile
+     links:
+       - database
+     depends_on:
+       - database
+     ports:
+       - 0:5000:5000

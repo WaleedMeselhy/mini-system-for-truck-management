@@ -52,7 +52,7 @@ Base = declarative_base(cls=Base)
 class Truck(Base):
     __tablename__ = 'truck'
     id = Column(Integer, primary_key=True)
-    plate_number = Column(String)
+    plate_number = Column(String, unique=True)
 
 
 class TruckLog(Base):
